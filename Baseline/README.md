@@ -27,7 +27,6 @@ Note:Ensure that the "Embeddings" and "Dataset_Images" folders are created to st
 ***Dataset***
 ------------------------------------------
 
-Download the HateMM dataset from [this link](https://zenodo.org/records/7799469).
 [Download the HateMM dataset](https://zenodo.org/records/7799469)
 
 
