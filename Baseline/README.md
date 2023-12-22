@@ -27,7 +27,7 @@ Note:Ensure that the "Embeddings" and "Dataset_Images" folders are created to st
 ***Dataset***
 ------------------------------------------
 
-Download the HateMM dataset from [this link](insert_dataset_link_here).
+Download the HateMM dataset from [this link](https://zenodo.org/records/7799469).
 
 After downloading, extract the audio from videos and place them in the following locations:
 
