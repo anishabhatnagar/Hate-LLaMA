@@ -1,6 +1,6 @@
 # Reproducing HateMM Baseline Results
 
-This README covers the steps to reproduce the baseline results from the HateMM paper to compare against our proposed model.
+This README covers the steps to reproduce the baseline results from the [HateMM paper](https://arxiv.org/pdf/2305.03915.pdf) to compare against our proposed model.
 
 Please note that only the best performing model results are being reproduced here. 
 
