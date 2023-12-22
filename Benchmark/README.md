@@ -1,4 +1,4 @@
-# Hate-LLaMA
+# Collecting Benchmark Dataset
 
 Step 1: python3 video_scraping.py
 
