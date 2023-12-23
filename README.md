@@ -81,3 +81,17 @@ unzip Results.npz
 python compute_metrics.py whole_results.npy
 ```
 
+## Additional Information
+We also provide the code to crawl bitchute platform and curate the benchmark in ```/benchmark```. \
+The updated code to run the HateMM baseline for our benchmark is provided in ```/baseline```.
+
+## Acknowledgements
+We are grateful for the following open-source repos that helped us build our project
+1. [Video-LLaMA](https://github.com/DAMO-NLP-SG/Video-LLaMA/tree/main)
+2. [HateMM](https://github.com/hate-alert/HateMM/tree/main)
+3. []
+
+## Contributors
+* Anisha Bhatnagar
+* Divyanshi Parashar
+* Simran Makariye
