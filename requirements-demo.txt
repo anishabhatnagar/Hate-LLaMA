@@ -1,0 +1,15 @@
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch==2.1.1
+torchaudio==2.1.1
+torchvision==0.16.1
+transformers==4.28.0
+tqdm
+decord
+timm
+einops
+opencv_python
+torchvision
+
+salesforce-lavis
+accelerate
+pytorchvideo
