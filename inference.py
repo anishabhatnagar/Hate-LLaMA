@@ -29,7 +29,7 @@ def setup_seeds(config):
     cudnn.benchmark = False
     cudnn.deterministic = True
 
-def upload_imgorvideo(video_path, chat_state, subtitle=None):
+def upload_imgorvideo(video_path, chat_state):
     chat_state = default_conversation.copy()
     chat_state = Conversation(
         system= "",
@@ -65,15 +65,13 @@ if __name__ == "__main__":
     parser.add_argument("--cfg-path", default='eval_configs/video_llama_eval_withaudio_stage3.yaml', help="path to configuration file.")
     parser.add_argument("--options", nargs="+", help="override some settings in the used config, format: --option xx=xx yy=yy zz=zz")
 
-    # input for emotion reasoning dataset
+    # input for dataset
     parser.add_argument('--video_root',  type=str, default="/scratch/ab10945/LLVM/Correct_hatemm/test_videos_new",  help='video root')
     parser.add_argument('--label_path',  type=str, default="/scratch/ab10945/LLVM/Correct_hatemm/test_new.json",  help='label path')
-    parser.add_argument('--no_subtitle', action='store_true', default=False, help='whether use subtitle in the inference (A+V+T)')
-    parser.add_argument('--user_message',type=str, default="A hateful video is a video that promotes animosity, hostility, or violence against individuals or groups based on attributes such as their race, ethnicity, religion, national origin, gender, sexual orientation, disability, or other characteristic. It contains Derogatory Language, like racial slurs. Analyze both the audio and video content. Is this hateful? Provide your answer as a single word, either ‘Yes’ or ‘No’, without any accompanying explanation.", help='input user message')
+    parser.add_argument('--user_message',type=str, default="Is this hateful? Answer (Yes/No)", help='input user message')
 
     # test multiple saved files (accelerate)
     parser.add_argument('--ckpt_root',    type=str, default=None,  help='test multiple files')
-    parser.add_argument('--test_epochs',  type=str, default=None,  help='test which epochs')
     args = parser.parse_args()
     cfg = Config(args)
     
@@ -93,8 +91,6 @@ if __name__ == "__main__":
     df = pd.read_json(args.label_path)
     for _, row in df.iterrows():
         name     = row['video']
-#             emotion  = row['QA']
-#             subtitle = row['subtitles']
         answer   = row['QA'][0]['a']
         print (f'process on {name}')
         video_path = os.path.join(args.video_root, f'{name}')
@@ -103,7 +99,7 @@ if __name__ == "__main__":
         # process for one file
         chat_state, img_list = [], []
         subtitle = None
-        chat_state, img_list = upload_imgorvideo(video_path, chat_state, subtitle=subtitle)
+        chat_state, img_list = upload_imgorvideo(video_path, chat_state)
         chat_state = gradio_ask(user_message, chat_state)
         response = gradio_answer(chat_state, img_list, num_beams=1, temperature=1)
         print (f'assistant: {user_message}')
@@ -114,6 +110,6 @@ if __name__ == "__main__":
         }
 
 
-    print ('Step3: save results for one ckpt_3')
-    save_path = os.path.join('ckpt5.npz')
+    print ('Step3: save results')
+    save_path = os.path.join('Results.npz')
     np.savez_compressed(save_path,whole_results=whole_results)
