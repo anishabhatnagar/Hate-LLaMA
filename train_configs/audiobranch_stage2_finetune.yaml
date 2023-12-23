@@ -8,13 +8,10 @@ model:
   # Q-Former
   num_query_token: 32
   
-  # If you want train models based on LLaMA-2-chat,
-  # some ckpts could be download from our provided huggingface repo
-  # i.e.  https://huggingface.co/DAMO-NLP-SG/Video-LLaMA-2-13B-Finetuned
+
   llama_model: "ckpt/Video-LLaMA-2-7B-Finetuned/llama-2-7b-chat-hf"
   imagebind_ckpt_path: "ckpt/Video-LLaMA-2-7B-Finetuned/imagebind_huge"
-  # The ckpt of audio branch after stage1 pretrained, 
-  ckpt: 'ckpt/Video-LLaMA-2-7B-Finetuned/VL_LLaMA_2_7B_Finetuned.pth'   # you can use our pretrained ckpt from https://huggingface.co/DAMO-NLP-SG/Video-LLaMA-2-13B-Pretrained/
+  ckpt: 'ckpt/Video-LLaMA-2-7B-Finetuned/VL_LLaMA_2_7B_Finetuned.pth'   
   ckpt_2:  'ckpt/Video-LLaMA-2-7B-Finetuned/AL_LLaMA_2_7B_Finetuned.pth'
 
   # only train audio branch
@@ -28,50 +25,14 @@ model:
   fusion_header_type: "seqTransf"
 
   max_txt_len: 512
-  # vicuna and llama_2_chat use different template !!!!
 
   # for llama_2_chat:
   end_sym: "</s>"
   prompt_path: "prompts/alignment_image.txt"
   prompt_template: '[INST] <<SYS>>\n \n<</SYS>>\n\n{} [/INST] '
 
-  # for vicuna:
-  # end_sym: "###"
-  # prompt_path: "prompts/alignment_image.txt"
-  # prompt_template: '###Human: {} ###Assistant: '
-
-
-  
 
 datasets:
-#   cc_sbu_align:
-#     data_type: images
-#     build_info:
-#       storage: path/cc_sbu_align/
-#     vis_processor:
-#       train:
-#         name: "blip2_image_train"
-#         image_size: 224
-#     text_processor:
-#       train:
-#         name: "blip_caption"
-    
-#   llava_instruct:
-#     data_type: images
-#     build_info:
-#       anno_dir: path/llava_instruct_150k.json
-#       videos_dir: path/train2014/
-#     vis_processor:
-#       train:
-#         name: "blip2_image_train"
-#         image_size: 224
-#     text_processor:
-#       train:
-#         name: "blip_caption"
-#     num_video_query_token: 8
-#     tokenizer_name: "ckpt/vicuna-13b/" or "ckpt/vicuna-7b/" or "ckpt/llama-2-7b-chat-hf"  or "ckpt/llama-2-13b-chat-hf"
-#     model_type: "llama_v2" or "vicuna"  # need to set, as vicuna and llama_2_chat use different template
-   
   webvid_instruct:
     data_type: video
     build_info:
@@ -87,7 +48,7 @@ datasets:
         name: "blip_caption"
     num_video_query_token: 8
     tokenizer_name: "ckpt/Video-LLaMA-2-7B-Finetuned/llama-2-7b-chat-hf"
-    model_type: "llama_v2"  # need to set, as vicuna and llama_2_chat use different template
+    model_type: "llama_v2"  
     
 run:
   task: video_text_pretrain
@@ -106,7 +67,7 @@ run:
   warmup_steps: 400
 
   seed: 42
-  output_dir: "output_rtx8000/audiobranch_stage3_finetune"
+  output_dir: "output/audiobranch_stage3_finetune"
 
   amp: True
   resume_ckpt_path: null
